@@ -1,0 +1,62 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: acf6455fc57a015adfe78c535e0d22d76932f649325825499eb212e55491349c
+
+name:           debug
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/isovector/debug#readme>
+homepage:       https://github.com/isovector/debug#readme
+bug-reports:    https://github.com/isovector/debug/issues
+author:         Sandy Maguire
+maintainer:     sandy@sandymaguire.me
+copyright:      Sandy Maguire
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/isovector/debug
+
+library
+  exposed-modules:
+      Debug
+      Lib
+      Test
+  other-modules:
+      Paths_debug
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+    , containers
+    , ghc
+    , ghc-tcplugins-extra
+    , magic-tyfams
+    , syb
+  default-language: Haskell2010
+
+test-suite debug-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_debug
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , containers
+    , debug
+    , ghc
+    , ghc-tcplugins-extra
+    , magic-tyfams
+    , syb
+  default-language: Haskell2010

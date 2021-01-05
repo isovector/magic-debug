@@ -1,0 +1,42 @@
+name:                debug
+version:             0.1.0.0
+github:              "isovector/debug"
+license:             BSD3
+author:              "Sandy Maguire"
+maintainer:          "sandy@sandymaguire.me"
+copyright:           "Sandy Maguire"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/isovector/debug#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- magic-tyfams
+- ghc
+- syb
+- ghc-tcplugins-extra
+- containers
+
+library:
+  source-dirs: src
+
+tests:
+  debug-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - debug
