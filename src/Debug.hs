@@ -18,3 +18,8 @@ class Succeed a where
 instance Show a => Succeed a where
   succeed = show
 
+newtype ViaDebug a = ViaDebug a
+
+instance Debug a => Show (ViaDebug a) where
+  show (ViaDebug a) = "(" <> debug a <> ")"
+

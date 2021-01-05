@@ -33,12 +33,14 @@ plugin = magicTyFamPlugin "debug" "Debug" "Debug" keep $ \ty -> do
   case insts of
     (_, _) : _ -> do
       Just dict <- buildDict (error "nah") $ mkTyConApp (classTyCon show_cls) [ty]
-      pure $ Just $
-        -- pprPanic "made a" $ ppr $
-          evDFunApp (is_dfun succ_inst) [ty] [getEvExpr dict]
+      pure $ Just $ liftShowDictToDebugDict succ_inst ty dict
     _ -> do
       dict <- unsafeTcPluginTcM $ mkUnknownDebugTypeDict ty
       pure $ Just dict
+
+
+liftShowDictToDebugDict :: ClsInst -> Type -> EvTerm -> EvTerm
+liftShowDictToDebugDict succ_inst ty dict = evDFunApp (is_dfun succ_inst) [ty] [getEvExpr dict]
 
 
 
@@ -195,8 +197,13 @@ buildDict loc wantedDict = do
              pure $ evDFunApp dfun (fmap (mmap M.!) vars) $ fmap getEvExpr dicts
 
     Left _ -> do
+      let ty = head $ classParams
+      debug_dict <- unsafeTcPluginTcM $ mkUnknownDebugTypeDict ty
+      via_debug_tc <- tcLookupTyCon =<< lookupModuleAndName "debug" "Debug" "ViaDebug"
+      let Just succ_inst = findInst envs myclass [mkTyConApp via_debug_tc [ty]]
+      pure $ Just $ liftShowDictToDebugDict succ_inst ty debug_dict
       -- check givens?
-      pure Nothing
+      -- pure Nothing
 
 
 mkUnknownDebugTypeDict :: Type -> TcM EvTerm

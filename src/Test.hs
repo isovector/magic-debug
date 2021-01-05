@@ -4,6 +4,6 @@ module Test where
 
 import Debug
 
-test :: (a -> b) -> String
-test f = debug f
+main :: String
+main = debug (Just id)
 

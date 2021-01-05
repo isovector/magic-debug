@@ -9,5 +9,5 @@ main = do
   putStrLn $ debug @(Int -> Int) id
   putStrLn $ debug True
   putStrLn $ debug "hello world"
-  -- putStrLn $ debug $ Just not
+  putStrLn $ debug $ Just not
 
